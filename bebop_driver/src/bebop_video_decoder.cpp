@@ -71,8 +71,8 @@ bool VideoDecoder::InitCodec()
   try
   {
     // Very first init
-    avcodec_register_all();
-    av_register_all();
+    // avcodec_register_all();
+    // av_register_all();
     av_log_set_level(AV_LOG_QUIET);
 
     codec_ptr_ = avcodec_find_decoder(AV_CODEC_ID_H264);
@@ -90,11 +90,11 @@ bool VideoDecoder::InitCodec()
     codec_ctx_ptr_->width = 0;
     codec_ctx_ptr_->height = 0;
 
-    if (codec_ptr_->capabilities & CODEC_CAP_TRUNCATED)
+    if (codec_ptr_->capabilities & AV_CODEC_CAP_TRUNCATED)
     {
-      codec_ctx_ptr_->flags |= CODEC_FLAG_TRUNCATED;
+      codec_ctx_ptr_->flags |= AV_CODEC_FLAG_TRUNCATED;
     }
-    codec_ctx_ptr_->flags2 |= CODEC_FLAG2_CHUNKS;
+    codec_ctx_ptr_->flags2 |= AV_CODEC_FLAG2_CHUNKS;
 
     frame_ptr_ = av_frame_alloc();
     ThrowOnCondition(!frame_ptr_ , "Can not allocate memory for frames!");
